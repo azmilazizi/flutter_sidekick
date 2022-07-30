@@ -23,10 +23,8 @@ class _SidekickMission<T> {
   bool inFlightToTheTarget = false;
   bool get inFlight => inFlightToTheSource || inFlightToTheTarget;
 
-  void startFlight(SidekickFlightDirection direction) =>
-      _setInFlight(direction, true);
-  void endFlight(SidekickFlightDirection direction) =>
-      _setInFlight(direction, false);
+  void startFlight(SidekickFlightDirection direction) => _setInFlight(direction, true);
+  void endFlight(SidekickFlightDirection direction) => _setInFlight(direction, false);
 
   void _setInFlight(SidekickFlightDirection direction, bool inFlight) {
     if (direction == SidekickFlightDirection.toTarget) {
@@ -71,8 +69,7 @@ class SidekickTeamBuilder<T> extends StatefulWidget {
   /// The state from the closest instance of this class that encloses the given context.
   static SidekickTeamBuilderState<T> of<T>(BuildContext context) {
     assert(context != null);
-    final SidekickTeamBuilderState<T> result =
-        context.ancestorStateOfType(TypeMatcher<SidekickTeamBuilderState<T>>());
+    final SidekickTeamBuilderState result = context.findAncestorStateOfType<SidekickTeamBuilderState>();
     return result;
   }
 
@@ -83,8 +80,7 @@ class SidekickTeamBuilder<T> extends StatefulWidget {
 /// State for [SidekickTeamBuilder].
 ///
 /// Can animate widgets from one container to the other.
-class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>>
-    with TickerProviderStateMixin {
+class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>> with TickerProviderStateMixin {
   static const String _sourceListPrefix = 's_';
   static const String _targetListPrefix = 't_';
   static int _nextId = 0;
@@ -121,8 +117,7 @@ class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>>
     _initList(_targetList, widget.initialTargetList, _targetListPrefix);
   }
 
-  void _initList(
-      List<_SidekickMission<T>> list, List<T> initialList, String prefix) {
+  void _initList(List<_SidekickMission<T>> list, List<T> initialList, String prefix) {
     if (initialList != null) {
       for (var i = 0; i < initialList.length; i++) {
         final String id = '$prefix$i';
@@ -181,10 +176,8 @@ class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>>
   /// Moves the widget containing the specifed [message] from its position to its
   /// position in the other container.
   Future<void> move(T message) {
-    final _SidekickMission<T> sourceMission =
-        _getFirstMissionInList(_sourceList, message);
-    final _SidekickMission<T> targetMission =
-        _getFirstMissionInList(_targetList, message);
+    final _SidekickMission<T> sourceMission = _getFirstMissionInList(_sourceList, message);
+    final _SidekickMission<T> targetMission = _getFirstMissionInList(_targetList, message);
 
     SidekickFlightDirection direction;
     _SidekickMission<T> mission;
@@ -206,8 +199,7 @@ class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>>
       setState(() {
         target.add(mission);
       });
-      return mission.controller
-          .move(context, direction, tags: [_getTag(mission)]).then((_) {
+      return mission.controller.move(context, direction, tags: [_getTag(mission)]).then((_) {
         setState(() {
           mission.endFlight(direction);
           source.remove(mission);
@@ -219,21 +211,15 @@ class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>>
   }
 
   List<_SidekickMission<T>> _getSource(SidekickFlightDirection direction) {
-    return direction == SidekickFlightDirection.toTarget
-        ? _sourceList
-        : _targetList;
+    return direction == SidekickFlightDirection.toTarget ? _sourceList : _targetList;
   }
 
   List<_SidekickMission<T>> _getTarget(SidekickFlightDirection direction) {
-    return direction == SidekickFlightDirection.toTarget
-        ? _targetList
-        : _sourceList;
+    return direction == SidekickFlightDirection.toTarget ? _targetList : _sourceList;
   }
 
-  _SidekickMission<T> _getFirstMissionInList(
-      List<_SidekickMission<T>> list, T message) {
-    return list.firstWhere((mission) => identical(mission.message, message),
-        orElse: () => null);
+  _SidekickMission<T> _getFirstMissionInList(List<_SidekickMission<T>> list, T message) {
+    return list.firstWhere((mission) => identical(mission.message, message), orElse: () => null);
   }
 
   @override
@@ -260,8 +246,7 @@ class SidekickTeamBuilderState<T> extends State<SidekickTeamBuilder<T>>
     );
   }
 
-  SidekickBuilderDelegate<T> _buildSidekickBuilder(
-      BuildContext context, _SidekickMission<T> mission, bool isSource) {
+  SidekickBuilderDelegate<T> _buildSidekickBuilder(BuildContext context, _SidekickMission<T> mission, bool isSource) {
     return SidekickBuilderDelegate._internal(
       this,
       mission,
@@ -331,8 +316,7 @@ class SidekickBuilderDelegate<T> {
   }
 
   double _getOpacity() {
-    if (_mission.inFlightToTheSource && _isSource ||
-        _mission.inFlightToTheTarget && !_isSource) {
+    if (_mission.inFlightToTheSource && _isSource || _mission.inFlightToTheTarget && !_isSource) {
       return 0.0;
     } else {
       return 1.0;

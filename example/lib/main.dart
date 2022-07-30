@@ -16,14 +16,10 @@ class MyApp extends StatelessWidget {
       ),
       home: HomePage(),
       routes: <String, WidgetBuilder>{
-        'simple': (context) =>
-            SimpleScaffold(title: 'Simple', child: SimpleExample()),
-        'wrap': (context) =>
-            SimpleScaffold(title: 'Wrap', child: WrapExample()),
-        'bubbles': (context) =>
-            SimpleScaffold(title: 'Bubbles', child: BubblesExample()),
-        'wrap_change': (context) =>
-            SimpleScaffold(title: 'Wrap change', child: WrapChangeExample()),
+        'simple': (context) => SimpleScaffold(title: 'Simple', child: SimpleExample()),
+        'wrap': (context) => SimpleScaffold(title: 'Wrap', child: WrapExample()),
+        'bubbles': (context) => SimpleScaffold(title: 'Bubbles', child: BubblesExample()),
+        'wrap_change': (context) => SimpleScaffold(title: 'Wrap change', child: WrapChangeExample()),
       },
     );
   }
@@ -69,11 +65,10 @@ class HomeTile extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).primaryTextTheme.title.copyWith(
-                  color: ThemeData.estimateBrightnessForColor(color) ==
-                          Brightness.dark
-                      ? Colors.white
-                      : Colors.black),
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .titleMedium
+                  .copyWith(color: ThemeData.estimateBrightnessForColor(color) == Brightness.dark ? Colors.white : Colors.black),
             ),
           ),
         ),

@@ -50,8 +50,7 @@ class BubblesExample extends StatelessWidget {
                           // to trigger the move.
                           // The element to move is determined by the message.
                           // So it should be unique.
-                          onTap: () => builderDelegate.state
-                              .move(builderDelegate.message),
+                          onTap: () => builderDelegate.state.move(builderDelegate.message),
                           child: Bubble(
                             radius: 30.0,
                             fontSize: 12.0,
@@ -69,9 +68,9 @@ class BubblesExample extends StatelessWidget {
                         // You can set all the properties you would set on
                         // a Sidekick.
                         animationBuilder: (animation) => CurvedAnimation(
-                              parent: animation,
-                              curve: FlippedCurve(Curves.easeOut),
-                            ),
+                          parent: animation,
+                          curve: FlippedCurve(Curves.easeOut),
+                        ),
                         flightShuttleBuilder: (
                           context,
                           animation,
@@ -80,9 +79,9 @@ class BubblesExample extends StatelessWidget {
                           to,
                         ) =>
                             buildShuttle(
-                              animation,
-                              builderDelegate.message,
-                            ),
+                          animation,
+                          builderDelegate.message,
+                        ),
                       );
                     }).toList(),
                   ),
@@ -99,8 +98,7 @@ class BubblesExample extends StatelessWidget {
                         // trigger a move.
                         // Here we will move all the children for the target container,
                         // to the source container.
-                        onPressed: () => SidekickTeamBuilder.of<String>(context)
-                            .moveAll(SidekickFlightDirection.toSource),
+                        onPressed: () => SidekickTeamBuilder.of<String>(context).moveAll(SidekickFlightDirection.toSource),
                       ),
                       SizedBox(width: 60.0, height: 60.0),
                       CircleButton(
@@ -109,8 +107,7 @@ class BubblesExample extends StatelessWidget {
                         // trigger a move.
                         // Here we will move all the children for the source container,
                         // to the target container.
-                        onPressed: () => SidekickTeamBuilder.of<String>(context)
-                            .moveAll(SidekickFlightDirection.toTarget),
+                        onPressed: () => SidekickTeamBuilder.of<String>(context).moveAll(SidekickFlightDirection.toTarget),
                       ),
                     ],
                   ),
@@ -130,8 +127,7 @@ class BubblesExample extends StatelessWidget {
                           // to trigger the move.
                           // The element to move is determined by the message.
                           // So it should be unique.
-                          onTap: () => builderDelegate.state
-                              .move(builderDelegate.message),
+                          onTap: () => builderDelegate.state.move(builderDelegate.message),
                           child: Bubble(
                             radius: 50.0,
                             fontSize: 20.0,
@@ -149,9 +145,9 @@ class BubblesExample extends StatelessWidget {
                         // You can set all the properties you would set on
                         // a Sidekick.
                         animationBuilder: (animation) => CurvedAnimation(
-                              parent: animation,
-                              curve: Curves.easeOut,
-                            ),
+                          parent: animation,
+                          curve: Curves.easeOut,
+                        ),
                         flightShuttleBuilder: (
                           context,
                           animation,
@@ -160,9 +156,9 @@ class BubblesExample extends StatelessWidget {
                           to,
                         ) =>
                             buildShuttle(
-                              animation,
-                              builderDelegate.message,
-                            ),
+                          animation,
+                          builderDelegate.message,
+                        ),
                       );
                     }).toList(),
                   ),
@@ -185,8 +181,7 @@ class BubblesExample extends StatelessWidget {
         return Bubble(
           radius: Tween<double>(begin: 50.0, end: 30.0).evaluate(animation),
           fontSize: Tween<double>(begin: 20.0, end: 12.0).evaluate(animation),
-          backgroundColor: ColorTween(begin: Colors.green, end: Colors.blue)
-              .evaluate(animation),
+          backgroundColor: ColorTween(begin: Colors.green, end: Colors.blue).evaluate(animation),
           foregroundColor: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(2.0),
@@ -224,8 +219,7 @@ class Bubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    TextStyle textStyle =
-        theme.primaryTextTheme.subhead.copyWith(color: foregroundColor);
+    TextStyle textStyle = theme.primaryTextTheme.subtitle1.copyWith(color: foregroundColor);
     Color effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (ThemeData.estimateBrightnessForColor(textStyle.color)) {
